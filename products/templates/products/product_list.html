@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Products</title>
+</head>
+
+<body>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}</p>
+
+    <form action="/logout/" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    {% else %}
+    <a href="/products/signup/">Signup</a> |
+    <a href="/login/">Login</a>
+    {% endif %}
+
+    <br><br>
+
+    <a href="/products/create/">Add Product</a>
+
+    <h1>Product List</h1>
+
+    {% for product in products %}
+    <div>
+        <h2>
+            <a href="/products/{{ product.id }}/">
+                {{ product.name }}
+            </a>
+        </h2>
+        <p>Price: {{ product.price }}</p>
+        <p>{{ product.description }}</p>
+
+        {% if product.user == user %}
+        <a href="/products/{{ product.id }}/edit/">Edit</a>
+        <form action="/products/{{ product.id }}/delete/" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+        {% endif %}
+    </div>
+    <hr>
+    {% endfor %}
+
+</body>
+
+</html>

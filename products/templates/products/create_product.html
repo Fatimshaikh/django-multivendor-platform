@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Product</title>
+</head>
+
+<body>
+    <h1>Add Product</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="/products/">Back</a>
+</body>
+
+</html>
